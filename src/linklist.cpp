@@ -66,7 +66,7 @@ void linklist::do_delete_list(void)
 }
 
 
-void linklist::do_du mp_all(struct node *head)
+void linklist::do_dump_all(struct node *head)
 {
 	if (head == NULL)
 	{

@@ -27,12 +27,11 @@ public:
     ~tree();
     void insert_node(int key);
     struct tree_node *delete_node(struct tree_node *deleted_node);
-    struct tree_node *successor(void);
-    struct tree_node *preccessor(void);
-    struct tree_node *search(int key);
-    struct tree_node *find_max(void);
-    struct tree_node *find_min(void);
-    void inorder_visit(void);
+	struct tree_node *search_node(struct tree_node *subtree, int key);
+    struct tree_node *successor(struct tree_node *node);
+    struct tree_node *find_max(struct tree_node *subtree);
+    struct tree_node *find_min(struct tree_node *subtree);
+    void inorder_visit(struct tree_node *subtree);
 };
 
 #endif /* tree_hpp */

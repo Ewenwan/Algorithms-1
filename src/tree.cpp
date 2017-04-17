@@ -7,6 +7,7 @@
 //
 
 #include "tree.hpp"
+#include "common.h"
 #include <stdlib.h>
 
 
@@ -52,6 +53,50 @@ void tree::insert_node(int key){
     return;
 }
 
+struct tree_node* tree::search_node(struct tree_node *subtree, int key)
+{
+	if (subtree->key == key || subtree == nullptr)
+		return subtree;
+
+	if (key > subtree->key)
+		return search_node(subtree->right, key);
+	else
+		return search_node(subtree->left, key);
+
+}
+
+struct tree_node* tree::find_max(struct tree_node *subtree)
+{
+	if (subtree->right == nullptr)
+		return subtree;
+	return find_max(subtree->right);
+}
+
+struct tree_node* tree::find_min(struct tree_node *subtree)
+{
+	if (subtree->left == nullptr)
+		return subtree;
+	return find_min(subtree->left);
+}
+
+struct tree_node* tree::successor(struct tree_node *node)
+{
+	struct tree_node* current = node;
+	struct tree_node* parent = node->parent;
+	if (node->right != nullptr)
+		return find_min(node->right);
+	else
+	{
+		while (parent != 0 && current == parent->right)
+		{
+			current = parent;
+			parent = parent->parent;
+		}
+		return parent;
+	}
+}
+
+
 
 struct tree_node* tree::delete_node(struct tree_node *deleted_node)
 {
@@ -64,7 +109,7 @@ struct tree_node* tree::delete_node(struct tree_node *deleted_node)
     }
     else
     {
-        abstract_node = successor();
+        abstract_node = successor(deleted_node);
     }
 
     if(abstract_node ->left != nullptr)
@@ -95,4 +140,17 @@ struct tree_node* tree::delete_node(struct tree_node *deleted_node)
         deleted_node->key = abstract_node->key;
     
     return abstract_node;
+}
+
+void tree::inorder_visit(struct tree_node *subtree)
+{
+
+	if (subtree != nullptr)
+	{
+		inorder_visit(subtree->left);
+		cout << "%d " << subtree->key;
+		inorder_visit(subtree->right);
+	}
+
+	return;
 }

@@ -1,13 +1,5 @@
-//
-//  tree.hpp
-//  algorithms
-//
-//  Created by Lucas on 2017/4/15.
-//  Copyright © 2017年 Lucas. All rights reserved.
-//
-
-#ifndef tree_hpp
-#define tree_hpp
+#ifndef __TREE_H__
+#define __TREE_H__
 
 #include <stdio.h>
 
@@ -32,6 +24,8 @@ public:
     struct tree_node *find_max(struct tree_node *subtree);
     struct tree_node *find_min(struct tree_node *subtree);
     void inorder_visit(struct tree_node *subtree);
+	struct tree_node *get_root(void);
+
 };
 
 #endif /* tree_hpp */

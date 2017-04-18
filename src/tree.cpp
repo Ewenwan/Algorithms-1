@@ -1,11 +1,3 @@
-//
-//  tree.cpp
-//  algorithms
-//
-//  Created by Lucas on 2017/4/15.
-//  Copyright © 2017年 Lucas. All rights reserved.
-//
-
 #include "tree.hpp"
 #include "common.h"
 #include <stdlib.h>
@@ -13,6 +5,11 @@
 
 tree::tree():root(nullptr){
     return;
+}
+
+tree::~tree()
+{
+	return;
 }
 
 void tree::insert_node(int key){
@@ -52,6 +49,13 @@ void tree::insert_node(int key){
     }
     return;
 }
+
+struct tree_node* tree::get_root(void)
+{
+	return this->root;
+}
+
+
 
 struct tree_node* tree::search_node(struct tree_node *subtree, int key)
 {
@@ -103,7 +107,7 @@ struct tree_node* tree::delete_node(struct tree_node *deleted_node)
     tree_node* abstract_node = nullptr;
     tree_node* child = nullptr;
     
-    if(root->left!=nullptr || root->right!=nullptr)
+    if(root->left == nullptr || root->right == nullptr)
     {
         abstract_node = deleted_node;
     }
@@ -148,7 +152,7 @@ void tree::inorder_visit(struct tree_node *subtree)
 	if (subtree != nullptr)
 	{
 		inorder_visit(subtree->left);
-		cout << "%d " << subtree->key;
+		cout << subtree->key <<" ";
 		inorder_visit(subtree->right);
 	}
 

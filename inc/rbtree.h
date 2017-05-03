@@ -1,8 +1,9 @@
 #ifndef __RBTREE_H__
 #define __RBTREE_H__
 
-#define BLACK 0;
-#define RED	1;
+#define BLACK 0
+#define RED	1
+#define grandparent parent->parent
 
 struct rbtree_node
 {
@@ -31,6 +32,7 @@ public:
 	void rb_insert_node(struct the_tree *T, int key);
 	void rb_left_rotate(struct the_tree *T, struct rbtree_node *object);
 	void rb_right_rotate(struct the_tree *T, struct rbtree_node *object);
+	void rb_insert_fixup(struct the_tree *T, struct rbtree_node *z);
 
 };
 

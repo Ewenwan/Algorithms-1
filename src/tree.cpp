@@ -1,6 +1,5 @@
 #include "tree.hpp"
 #include "common.h"
-#include <stdlib.h>
 
 
 tree::tree():root(nullptr){

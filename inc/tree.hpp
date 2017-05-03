@@ -11,6 +11,7 @@ struct tree_node
     struct tree_node *parent;
     
 };
+
 class tree{
 private:
     struct tree_node *root;

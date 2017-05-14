@@ -33,7 +33,8 @@ public:
 	void rb_left_rotate(struct the_tree *T, struct rbtree_node *object);
 	void rb_right_rotate(struct the_tree *T, struct rbtree_node *object);
 	void rb_insert_fixup(struct the_tree *T, struct rbtree_node *z);
-
+    struct rbtree_node* rb_delete_node(struct the_tree *T, int key);
+    void rb_delete_fixup(struct the_tree *T, struct rbtree_node *x);
 };
 
 #endif

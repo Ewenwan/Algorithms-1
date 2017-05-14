@@ -112,8 +112,8 @@ void rbtree::rb_insert_fixup(struct the_tree *T, struct rbtree_node *z)
 			}
 			else
 			{
-				if (z = z->parent->right)
-				{
+				if (z == z->parent->right)
+                {
 					z = z->parent;
 					rb_left_rotate(T, z);
 				}
@@ -136,7 +136,7 @@ void rbtree::rb_insert_fixup(struct the_tree *T, struct rbtree_node *z)
 			}
 			else
 			{
-				if (z = z->parent->left)
+				if (z == z->parent->left)
 				{
 					z = z->parent;
 					rb_right_rotate(T, z);
@@ -149,5 +149,51 @@ void rbtree::rb_insert_fixup(struct the_tree *T, struct rbtree_node *z)
 		}
 	}
 	T->root->color = BLACK;
-	
+}
+
+void rbtree::rb_delete_fixup(struct the_tree *T, struct rbtree_node *x)
+{
+    struct rbtree_node *w;
+    
+    while(x != T->root && x->color==BLACK)
+    {
+        if(x==x->parent->left)
+        {
+            w = x->parent->right;
+            if(w->color == RED) //CASE 1
+            {
+                w->color = BLACK;
+                x->parent->color = RED;
+                rb_left_rotate(T,x->parent);
+                w = x->parent->right;
+            }
+            else
+            {
+                if(w->right->color == BLACK && w->left->color== BLACK)
+                {
+                    w->color = RED;
+                    x = x->parent;
+                }
+                else
+                {
+                    if(w->right->color == BLACK && w->left->color == RED)
+                    {
+                        w->color=RED;
+                        w->left->color=BLACK;
+                        rb_right_rotate(T,w);
+                        w=x->parent->right;
+                    }
+                    w->color = x->parent->color;
+                    x->parent->color = BLACK;
+                    w->right->color=BLACK;
+                    x=T->root;
+                }
+            }
+        }
+        else
+        {
+            
+        }
+    }
+    x->color = BLACK;
 }

@@ -267,7 +267,50 @@ struct rbtree_node* rbtree::rb_delete_node(struct the_tree *T, struct rbtree_nod
 
 struct rbtree_node* rbtree::rb_find_successor(struct rbtree_node *z)
 {
-    return z;
+    struct rbtree_node *parent = z->parent;
+    struct rbtree_node *cur = z;
+    
+    if(z->right != T->nil)
+        return rb_find_min(z);
+    else
+    {
+        while(parent!=T->nil && parent->right ==cur)
+        {
+            cur = parent;
+            parent = cur->parent;
+        }
+        if(parent == nullptr)
+            return nullptr;
+        else
+            return parent;
+
+    }
 }
+
+struct rbtree_node* rbtree::rb_find_min(struct rbtree_node *z)
+{
+    if(z->left == T->nil)
+    {
+        return z;
+    }
+    
+    return rb_find_min(z->left);
+}
+
+void rbtree::rbtree_dump(struct rbtree_node *root)
+{
+    return;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 

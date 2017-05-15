@@ -38,6 +38,8 @@ public:
     struct rbtree_node* rb_delete_node(struct the_tree *T, struct rbtree_node *z);
     struct rbtree_node* rb_search(int key);
     struct rbtree_node* rb_find_successor(struct rbtree_node *z);
+    struct rbtree_node* rb_find_min(struct rbtree_node  *z);
+    void rbtree_dump(struct rbtree_node *root);
 };
 
 #endif

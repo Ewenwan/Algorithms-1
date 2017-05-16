@@ -1,10 +1,11 @@
 #ifndef __RBTREE_H__
 #define __RBTREE_H__
 
-#define BLACK 0
-#define RED	1
+#define BLACK 6
+#define RED	12
 #define grandparent parent->parent
-
+#define MAX_NODES 100
+#define MAGIC_EMPTY_KEY 0x5a5a5a5a
 struct rbtree_node
 {
 	int key;
@@ -12,8 +13,10 @@ struct rbtree_node
 	struct rbtree_node *right;
 	struct rbtree_node *parent;
 	unsigned char color;
-
+	unsigned int level;
+	struct rbtree_node *sibling;
 };
+
 
 struct the_tree
 {
@@ -21,10 +24,16 @@ struct the_tree
 	struct rbtree_node *nil;
 };
 
+static void setup_level_array(struct rbtree_node *n, struct rbtree_node *parent, struct the_tree *T, struct rbtree_node **level_array);
+static void attach_node_to_level(struct rbtree_node *n, unsigned int level, struct rbtree_node **level_array);
+static void dump_level_node(struct rbtree_node **level_array, unsigned int level);
+static void dump_list(struct rbtree_node *node);
+static void print_key(int key, unsigned char color);
 
 class rbtree{
 private:
 	struct the_tree *T;
+	struct rbtree_node **level_array;
 
 public:
 	rbtree();

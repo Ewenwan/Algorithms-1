@@ -3,6 +3,7 @@
 #include "linklist.h"
 #include "stack.h"
 #include "tree.hpp"
+#include "rbtree.h"
 
 int get_random_value(void)
 {
@@ -132,14 +133,67 @@ void tree_test(void)
 	return;
 }
 
+void rbtree_test(void)
+{
+	rbtree my_tree;
+	struct the_tree *T;
+	struct rbtree_node *tmp;
+
+
+	T = my_tree.get_the_tree();
+	my_tree.rb_insert_node(7);
+	my_tree.rb_insert_node(6);
+	my_tree.rb_insert_node(5);
+	my_tree.rb_insert_node(4);
+	my_tree.rbtree_dump(T->root);
+	printf("delete 5 \n");
+	tmp = my_tree.rb_search(5);
+	if (tmp == T->nil)
+		printf("search 5 failed \n");
+	my_tree.rb_delete_node(tmp);
+	my_tree.rbtree_dump(T->root);
+	printf("insert 20 \n");
+	my_tree.rb_insert_node(20);
+	my_tree.rbtree_dump(T->root);
+	printf("insert 21 \n");
+	my_tree.rb_insert_node(21);
+	my_tree.rbtree_dump(T->root);
+	printf("insert 22 \n");
+	my_tree.rb_insert_node(22);
+	my_tree.rbtree_dump(T->root);
+	printf("insert 23 \n");
+	my_tree.rb_insert_node(23);
+	my_tree.rbtree_dump(T->root);
+	printf("insert 24 \n");
+	my_tree.rb_insert_node(24);
+	my_tree.rbtree_dump(T->root);
+	printf("delete 22 \n");
+	tmp = my_tree.rb_search(22);
+	if (tmp == T->nil)
+		printf("search 22 failed \n");
+	my_tree.rb_delete_node(tmp);
+	my_tree.rbtree_dump(T->root);
+
+	return;
+}
+
+void examin_color(void)
+{
+	int i;
+	for (i = 0; i < 255; i++)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), i);
+		printf("hello %d\n", i);
+	}
+}
 
 int main(void)
 {
 	//queue_test();
 	//link_list_test();
 	//stack_test();
-
-	tree_test();
+	//tree_test();
+	rbtree_test();
 
 	system("pause");
 }

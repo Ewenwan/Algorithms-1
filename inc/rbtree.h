@@ -16,6 +16,7 @@ struct rbtree_node
 	unsigned char color;
 	unsigned int level;
 	struct rbtree_node *sibling;
+	void *data;
 };
 
 
@@ -23,6 +24,11 @@ struct the_tree
 {
 	struct rbtree_node *root;
 	struct rbtree_node *nil;
+	void (*insert_hook)(struct rbtree_node *n);
+	void (*delete_hook)(struct rbtree_node *n);
+	void (*left_rotate_hook)(struct rbtree_node *n);
+	void (*right_rotate_hook)(struct rbtree_node *n);
+
 };
 
 static void setup_level_array(struct rbtree_node *n, struct rbtree_node *parent, struct the_tree *T, struct rbtree_node **level_array);
@@ -44,7 +50,6 @@ public:
 	void rb_left_rotate(struct the_tree *T, struct rbtree_node *object);
 	void rb_right_rotate(struct the_tree *T, struct rbtree_node *object);
 	void rb_insert_fixup(struct the_tree *T, struct rbtree_node *z);
-    struct rbtree_node* rb_delete_node(int key);
     void rb_delete_fixup(struct the_tree *T, struct rbtree_node *x);
     struct rbtree_node* rb_delete_node(struct rbtree_node *z);
     struct rbtree_node* rb_search(int key);

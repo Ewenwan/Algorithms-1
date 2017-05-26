@@ -9,7 +9,6 @@ rbtree::rbtree()
 	T->root = T->nil;
 	T->nil->color = WHITE;
 	T->nil->key = -1;
-	
 }
 
 rbtree::~rbtree()
@@ -48,7 +47,8 @@ void rbtree::rb_left_rotate(struct the_tree *T, struct rbtree_node *object)
 	}
 	y->left = x;
 	x->parent = y;
-
+	if (T->left_rotate_hook)
+		T->left_rotate_hook(y);
 
 	return;
 }
@@ -73,7 +73,8 @@ void rbtree::rb_right_rotate(struct the_tree *T, struct rbtree_node *object)
 
 	y->right = x;
 	x->parent = y;
-
+	if (T->right_rotate_hook)
+		T->right_rotate_hook(y);
 	return;
 }
 
@@ -90,7 +91,10 @@ void rbtree::rb_insert_node(int key)
 			x = x->right;
 		else
 			x = x->left;
+		if (T->insert_hook)
+			T->insert_hook(y);
 	}
+
 	node->parent = y;
 	if (y == T->nil)
 		T->root = node;
@@ -384,7 +388,9 @@ static void print_key(int key, unsigned char color)
 		cout << "unknow color" << endl;
 		return;
 	}
+
 	cout << key << " ";
+
 }
 
 static void dump_list(struct rbtree_node *node)

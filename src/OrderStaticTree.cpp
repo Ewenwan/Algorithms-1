@@ -18,7 +18,7 @@ static void insert_hook(struct rbtree_node *n)
 		n->data = malloc(sizeof(int));
 	}
 	size = (unsigned int *)n->data;
-	*size++;
+	*size = *size + 1;
 }
 
 static void delete_hook(struct rbtree_node *n)

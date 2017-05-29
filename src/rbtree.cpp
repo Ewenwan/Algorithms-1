@@ -82,7 +82,20 @@ void rbtree::rb_insert_node(int key)
 {
 	struct rbtree_node *x = T->root;
 	struct rbtree_node *y = T->nil;
-	struct rbtree_node *node = (struct rbtree_node *)malloc(sizeof(rbtree_node));
+	struct rbtree_node *node;
+
+	if (T->setup_a_cust_node)
+		node = T->setup_a_cust_node(key, RED, 1, T, nullptr);
+	else
+	{
+		node = (struct rbtree_node *)calloc(1, sizeof(rbtree_node));
+		node->key = key;
+		node->color = RED;
+		node->left = T->nil;
+		node->right = T->nil;
+	}
+
+
 
 	while (x != T->nil)
 	{
@@ -91,6 +104,7 @@ void rbtree::rb_insert_node(int key)
 			x = x->right;
 		else
 			x = x->left;
+
 		if (T->insert_hook)
 			T->insert_hook(y);
 	}
@@ -103,10 +117,7 @@ void rbtree::rb_insert_node(int key)
 	else
 		y->left = node;
 
-	node->key = key;
-	node->color = RED;
-	node->left = T->nil;
-	node->right = T->nil;
+
 	rb_insert_fixup(T,node);
 
 }
@@ -275,6 +286,9 @@ struct rbtree_node* rbtree::rb_delete_node(struct rbtree_node *z)
     if(y != z)
         z->key = y->key;
     
+	if (T->delete_hook)
+		T->delete_hook(y, T);
+
 	if (y->color == BLACK){
 		rb_delete_fixup(T, x);
 #if RBTREE_DEBUG
@@ -353,9 +367,18 @@ static void setup_level_array(struct rbtree_node *n, struct rbtree_node *parent,
 	}
 	else if (n == T->nil)
 	{
-		empty = (struct rbtree_node *)calloc(1, sizeof(struct rbtree_node));
-		empty->key = MAGIC_EMPTY_KEY;
-		empty->color = WHITE;
+
+
+		if (T->setup_a_cust_node)
+		{
+			empty = T->setup_a_cust_node(MAGIC_EMPTY_KEY, WHITE, 0, T, nullptr);
+		}
+		else
+		{
+			empty = (struct rbtree_node *)calloc(1, sizeof(struct rbtree_node));
+			empty->key = MAGIC_EMPTY_KEY;
+			empty->color = WHITE;
+		}
 		attach_node_to_level(empty, parent->level + 1, level_array);
 		return;
 	}
@@ -393,20 +416,19 @@ static void print_key(int key, unsigned char color)
 
 }
 
-static void dump_list(struct rbtree_node *node)
+static void dump_list(struct rbtree_node *node, struct the_tree *T)
 {
 	if (node != nullptr)
 	{
-		print_key(node->key, node->color);
-		dump_list(node->sibling);
+		if (T->print_key_hook)
+			T->print_key_hook(node->key , node->color, node->data);
+		else
+			print_key(node->key, node->color);
+		dump_list(node->sibling, T);
 	}
 	return;
 }
 
-static void dump_level_node(struct rbtree_node **level_array, unsigned int level)
-{
-	dump_list(level_array[level]);
-}
 
 void rbtree::rbtree_dump(struct rbtree_node *root)
 {
@@ -417,7 +439,7 @@ void rbtree::rbtree_dump(struct rbtree_node *root)
 	printf("===rbtree dump===\n");
 	while (level_array[i] != nullptr)
 	{
-		dump_list(level_array[i]);
+		dump_list(level_array[i], this->T);
 		cout << endl;
 		i = i + 1;
 	}
@@ -442,6 +464,23 @@ struct rbtree_node* rbtree::rb_search(int key)
 	}
 
 	return cur;
+}
+
+static void __inorder_dump(struct rbtree_node *n, struct the_tree *T)
+{
+	if (n == T->nil)
+		return;
+
+	__inorder_dump(n->left, T);
+	printf("%d ", n->key);
+	__inorder_dump(n->right, T);
+	return;
+}
+
+void rbtree::inorder_dump(void)
+{
+	__inorder_dump(T->root, T);
+	cout << endl;
 }
 
 

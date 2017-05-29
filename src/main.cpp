@@ -4,6 +4,7 @@
 #include "stack.h"
 #include "tree.hpp"
 #include "rbtree.h"
+#include "OrderStaticTree.h"
 
 int get_random_value(void)
 {
@@ -176,7 +177,65 @@ void rbtree_test(void)
 
 	return;
 }
+void ostree_test(void)
+{
+	os_tree my_ostree;
+	rbtree *my_tree = my_ostree.get_the_os_tree();
+	struct the_tree *T;
+	struct rbtree_node *tmp;
 
+
+	T = my_tree->get_the_tree();
+
+
+	my_tree->rb_insert_node(7);
+	my_tree->rbtree_dump(T->root);
+	my_tree->rb_insert_node(6);
+	my_tree->rbtree_dump(T->root);
+	my_tree->rb_insert_node(5);
+	my_tree->rbtree_dump(T->root);
+	my_tree->rb_insert_node(4);
+	my_tree->rbtree_dump(T->root);
+	my_tree->rbtree_dump(T->root);
+	printf("delete 5 \n");
+	tmp = my_tree->rb_search(5);
+	if (tmp == T->nil)
+		printf("search 5 failed \n");
+	my_tree->rb_delete_node(tmp);
+	my_tree->rbtree_dump(T->root);
+	printf("insert 20 \n");
+	my_tree->rb_insert_node(20);
+	my_tree->rbtree_dump(T->root);
+	printf("insert 21 \n");
+	my_tree->rb_insert_node(21);
+	my_tree->rbtree_dump(T->root);
+	printf("insert 22 \n");
+	my_tree->rb_insert_node(22);
+	my_tree->rbtree_dump(T->root);
+	printf("insert 23 \n");
+	my_tree->rb_insert_node(23);
+	my_tree->rbtree_dump(T->root);
+	printf("insert 24 \n");
+	my_tree->rb_insert_node(24);
+	my_tree->rbtree_dump(T->root);
+	printf("delete 22 \n");
+	tmp = my_tree->rb_search(22);
+	if (tmp == T->nil)
+		printf("search 22 failed \n");
+	my_tree->rb_delete_node(tmp);
+	my_tree->rbtree_dump(T->root);
+
+	printf("inorder\n");
+	my_tree->rbtree_dump(T->root);
+	my_tree->inorder_dump();
+	printf("find 3thd node\n");
+	tmp = my_ostree.os_select(T->root, 3);
+	printf("3th key = %d\n", tmp->key);
+	printf("%d's ranks is %d\n", tmp->key, my_ostree.os_rank(tmp));
+	
+
+	return;
+}
 void examin_color(void)
 {
 	int i;
@@ -193,7 +252,8 @@ int main(void)
 	//link_list_test();
 	//stack_test();
 	//tree_test();
-	rbtree_test();
+	//rbtree_test();
+	ostree_test();
 
 	system("pause");
 }

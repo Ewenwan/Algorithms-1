@@ -25,16 +25,17 @@ struct the_tree
 	struct rbtree_node *root;
 	struct rbtree_node *nil;
 	void (*insert_hook)(struct rbtree_node *n);
-	void (*delete_hook)(struct rbtree_node *n);
+	void(*delete_hook)(struct rbtree_node *n, struct the_tree *T);
 	void (*left_rotate_hook)(struct rbtree_node *n);
 	void (*right_rotate_hook)(struct rbtree_node *n);
-
+	void(*print_key_hook)(int key, unsigned char color, void *data);
+	struct rbtree_node* (*setup_a_cust_node)(int key, unsigned char color, unsigned int defsize, struct the_tree *T, void *data);
 };
 
 static void setup_level_array(struct rbtree_node *n, struct rbtree_node *parent, struct the_tree *T, struct rbtree_node **level_array);
 static void attach_node_to_level(struct rbtree_node *n, unsigned int level, struct rbtree_node **level_array);
 static void dump_level_node(struct rbtree_node **level_array, unsigned int level);
-static void dump_list(struct rbtree_node *node);
+static void dump_list(struct rbtree_node *node, struct the_tree *T);
 static void print_key(int key, unsigned char color);
 
 class rbtree{
@@ -55,7 +56,8 @@ public:
     struct rbtree_node* rb_search(int key);
     struct rbtree_node* rb_find_successor(struct rbtree_node *z);
     struct rbtree_node* rb_find_min(struct rbtree_node  *z);
-    void rbtree_dump(struct rbtree_node *root);
+	void rbtree_dump(struct rbtree_node *root);
+	void inorder_dump(void);
 };
 #define RBTREE_DEBUG 0
 #endif

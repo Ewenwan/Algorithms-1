@@ -1,6 +1,6 @@
 #ifndef __ORDERSTATICTREE__
 #define __ORDERSTATICTREE__
-#include <rbtree.h>
+#include "rbtree.h"
 
 static void left_rotate_hook(struct rbtree_node *n);
 static void right_rotate_hook(struct rbtree_node *n);

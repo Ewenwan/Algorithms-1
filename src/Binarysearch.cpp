@@ -21,6 +21,7 @@ int binary_search(unsigned int A[], int p, int q, unsigned int key)
 		}
 	}
 	printf("[binary search] can't find %d \n", key);
+    return 0;
 }
 
 void binary_search_test(void)

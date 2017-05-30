@@ -14,9 +14,9 @@
 #include <stdio.h>
 #define Size 8
 
-void print_org_data(const int d[], int n);
-void print_array_data(const int d[], int low, int high);
-void swap(int *x, int *y);
+static void print_org_data(const int d[], int n);
+static void print_array_data(const int d[], int low, int high);
+static void swap(int *x, int *y);
 void move_up(int d[], int n);
 void move_down(int d[], int n);
 int output_and_delete_root(int d[], int *n);
@@ -154,7 +154,8 @@ void heap_main_test(void)
 
 	/* 將陣列 d 裡的 d[0] 到 d[Size-1] 等鍵值按「鍵值不遞減」排序 */
 	heap_sort_descending(d, 0, Size - 1);
-}
+    return;
+}
 
 
 static void my_swap(int *x, int *y)
@@ -258,4 +259,4 @@ void my_heap_main_test(void)
 
 	/* 將陣列 d 裡的 d[0] 到 d[Size-1] 等鍵值按「鍵值不遞減」排序 */
 	my_heap_sort_descending(d, 0, Size - 1);
-}
+}

@@ -394,16 +394,21 @@ static void print_key(int key, unsigned char color)
 {
 	if (color == RED)
 	{
+#if defined(_WIN32) || defined(_WIN64)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), RED);
-		
+#endif
 	}
 	else if (color == BLACK)
 	{
+#if defined(_WIN32) || defined(_WIN64)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLACK);
-	}
+#endif
+    }
 	else if (color == WHITE)
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+#if defined(_WIN32) || defined(_WIN64)
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+#endif
 		
 	}
 	else

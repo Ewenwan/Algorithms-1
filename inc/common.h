@@ -8,6 +8,8 @@
 #include <functional>
 #include <iostream>
 #include <iomanip>
+#if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+#endif
 using namespace std;
 #endif

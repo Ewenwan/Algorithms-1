@@ -241,7 +241,9 @@ void examin_color(void)
 	int i;
 	for (i = 0; i < 255; i++)
 	{
+        #if defined(_WIN32) || defined(_WIN64)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), i);
+        #endif
 		printf("hello %d\n", i);
 	}
 }

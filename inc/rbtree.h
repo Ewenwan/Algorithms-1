@@ -25,6 +25,7 @@ struct the_tree
 	struct rbtree_node *root;
 	struct rbtree_node *nil;
 	void (*insert_hook)(struct rbtree_node *n);
+	void(*insert_post_hook)(struct rbtree_node *n, struct the_tree *T);
 	void(*delete_hook)(struct rbtree_node *n, struct the_tree *T);
 	void (*left_rotate_hook)(struct rbtree_node *n);
 	void (*right_rotate_hook)(struct rbtree_node *n);
@@ -43,6 +44,7 @@ public:
 	~rbtree();
 	struct the_tree* get_the_tree(void);
 	void rb_insert_node(int key);
+	void rb_insert_node(int key, void *data);
 	void rb_left_rotate(struct the_tree *T, struct rbtree_node *object);
 	void rb_right_rotate(struct the_tree *T, struct rbtree_node *object);
 	void rb_insert_fixup(struct the_tree *T, struct rbtree_node *z);

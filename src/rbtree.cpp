@@ -122,6 +122,53 @@ void rbtree::rb_insert_node(int key)
 
 }
 
+
+void rbtree::rb_insert_node(int key, void *data)
+{
+	struct rbtree_node *x = T->root;
+	struct rbtree_node *y = T->nil;
+	struct rbtree_node *node;
+
+	if (T->setup_a_cust_node)
+		node = T->setup_a_cust_node(key, RED, 1, T, data);
+	else
+	{
+		node = (struct rbtree_node *)calloc(1, sizeof(rbtree_node));
+		node->key = key;
+		node->color = RED;
+		node->left = T->nil;
+		node->right = T->nil;
+	}
+
+
+
+	while (x != T->nil)
+	{
+		y = x;
+		if (key > x->key)
+			x = x->right;
+		else
+			x = x->left;
+
+		if (T->insert_hook)
+			T->insert_hook(y);
+	}
+
+	node->parent = y;
+	if (y == T->nil)
+		T->root = node;
+	else if (key > y->key)
+		y->right = node;
+	else
+		y->left = node;
+
+	rb_insert_fixup(T, node);
+	if (T->insert_post_hook)
+		T->insert_post_hook(node, T);
+
+
+}
+
 void rbtree::rb_insert_fixup(struct the_tree *T, struct rbtree_node *z)
 {
 	struct rbtree_node *y = nullptr;

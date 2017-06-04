@@ -5,7 +5,7 @@
 #include "tree.hpp"
 #include "rbtree.h"
 #include "OrderStaticTree.h"
-
+#include "int_tree.h"
 int get_random_value(void)
 {
 	default_random_engine generator;
@@ -248,6 +248,47 @@ void examin_color(void)
 	}
 }
 
+void inttree_test(void)
+{
+	int_tree my_int_tree;
+	rbtree *my_tree = my_int_tree.get_int_tree();
+	struct the_tree *T;
+	struct interval tmp;
+
+	T = my_tree->get_the_tree();
+
+	printf("insert 15-20 \n");
+	alloc_a_interval(&tmp, 15, 20);
+	my_int_tree.interval_insert(&tmp);
+	my_tree->rbtree_dump(T->root);
+
+	printf("insert 9 - 11\n");
+	alloc_a_interval(&tmp, 9, 11);
+	my_int_tree.interval_insert(&tmp);
+	my_tree->rbtree_dump(T->root);
+
+	printf("insert 23 - 28\n");
+	alloc_a_interval(&tmp, 23, 28);
+	my_int_tree.interval_insert(&tmp);
+	my_tree->rbtree_dump(T->root);
+
+
+	printf("insert 29- 31\n");
+	alloc_a_interval(&tmp, 29, 31);
+	my_int_tree.interval_insert(&tmp);
+	my_tree->rbtree_dump(T->root);
+
+	printf("delete 29 - 31\n");
+	alloc_a_interval(&tmp, 29, 31);
+	my_int_tree.interval_delete(&tmp);
+	my_tree->rbtree_dump(T->root);
+
+
+	return;
+}
+
+
+
 int main(void)
 {
 	//queue_test();
@@ -255,7 +296,7 @@ int main(void)
 	//stack_test();
 	//tree_test();
 	//rbtree_test();
-	ostree_test();
-
+	//ostree_test();
+	inttree_test();
 	system("pause");
 }

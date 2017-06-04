@@ -1,6 +1,16 @@
 #include "common.h"
 #include "int_tree.h"
 #include "rbtree.h"
+
+/*
+ * Inorder to maintain the max value in rb-tree operations, 
+ * for inseration, we only update the max filed for the structure change from rotation.(e.g. O(1))
+ * and update the max value from insert node to the root later.(e.g. O(log n))
+ *
+ * for deletetion, we update the max field from the parent of delete node to the root
+ * when the deletion complete.(e.g. O(log n)) and then update the max field only for structure change.(e.g. O(1))
+*/
+
 static void left_rotate_hook(struct rbtree_node *n)
 {
 	struct interval *n_i;

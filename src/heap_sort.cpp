@@ -210,16 +210,13 @@ static void my_move_down(int *heap, int index, int high)
 		if (largest != index)
 		{
 			swap(&heap[index], &heap[largest]);
-			is_swapped == 1;
+			is_swapped = 1;
 		}
 	} while (is_swapped);
 }
 
 static void my_delete_heapify(int *heap, int low, int high)
 {
-	int root;
-
-
 	my_swap(&heap[low], &heap[high]);
 	my_move_down(heap, low, high - 1);
 
@@ -229,7 +226,6 @@ void my_heap_sort_descending(int d[], int low, int high)
 	int i = 0;
 	//build MAX HEAP
 	int heap[9];
-	int result[8];
 	int size;
 
 	size = high - low + 1;

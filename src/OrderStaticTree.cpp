@@ -81,7 +81,7 @@ static struct rbtree_node* setup_os_node(int key, unsigned char color, unsigned 
 }
 
 
-struct rbtree* os_tree::get_the_os_tree(void)
+rbtree* os_tree::get_the_os_tree(void)
 {
 	return this->ostree;
 }
@@ -120,7 +120,6 @@ unsigned int os_tree::os_rank(struct rbtree_node *s)
 	}
 	return r;
 }
-
 
 
 os_tree::os_tree()
